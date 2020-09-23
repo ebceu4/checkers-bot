@@ -1,5 +1,5 @@
 {
-  "name": "checkers-bot",
+  "name": "checkersgamebot",
   "routes": [
     {
       "src": "/api/.*",
