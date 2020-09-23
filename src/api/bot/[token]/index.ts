@@ -3,7 +3,7 @@ import { NowRequest, NowResponse } from '@vercel/node'
 import { withAuth } from '../withAuth'
 
 
-export default withAuth(async (req: NowRequest, res: NowResponse) => {
+export default withAuth((req: NowRequest, res: NowResponse) => {
   console.log('BODY', req.body)
 
   const telegraf = new Telegraf(process.env.BOT_TOKEN!)
@@ -16,4 +16,5 @@ export default withAuth(async (req: NowRequest, res: NowResponse) => {
   telegraf.launch({ webhook: { domain: 'https://checkersgamebot.vercel.app', hookPath: `/api/bot/${process.env.BOT_TOKEN!}` } })
     .then(x => telegraf.handleUpdate(req.body, res))
     .then(x => telegraf.stop())
+    .then(x => res.status(200))
 })
