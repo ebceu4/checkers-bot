@@ -1,14 +1,10 @@
-import { NowRequest, NowResponse } from '@vercel/node'
 import Telegraf from 'telegraf'
 import { withAuth } from '../withAuth'
 
-export default withAuth((req: NowRequest, res: NowResponse) => {
-  const {
-    query: { name },
-  } = req
+const telegraf = new Telegraf(process.env.BOT_TOKEN!)
+telegraf.start((ctx) => ctx.reply('Welcome'))
+telegraf.help((ctx) => ctx.reply('Send me a sticker'))
+telegraf.on('sticker', (ctx) => ctx.reply('👍'))
+telegraf.hears('hi', (ctx) => ctx.reply('Hey there'))
 
-
-
-
-  res.send('OK')
-})
+export default withAuth(telegraf.webhookCallback(`/api/bot/${process.env.BOT_TOKEN!}`))
