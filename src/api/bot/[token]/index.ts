@@ -16,4 +16,5 @@ export default withAuth(async (req: NowRequest, res: NowResponse) => {
 
   const result = await telegraf.handleUpdate(req.body, res)
   console.log('Result', result)
+  res.status(200)
 })
