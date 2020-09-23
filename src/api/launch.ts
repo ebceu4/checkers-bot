@@ -10,6 +10,6 @@ export default (req: NowRequest, res: NowResponse) => {
   bot.help((ctx) => ctx.reply('Send me a sticker'))
   bot.on('sticker', (ctx) => ctx.reply('👍'))
   bot.hears('hi', (ctx) => ctx.reply('Hey there'))
-  bot.launch({ webhook: { hookPath: 'api', domain: process.env.VERCEL_URL } })
+  bot.launch({ webhook: { hookPath: `api/bot/${process.env.BOT_TOKEN!}`, domain: process.env.VERCEL_URL } })
   res.send(process.env)
 }
