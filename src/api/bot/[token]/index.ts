@@ -1,20 +1,42 @@
-import Telegraf from 'telegraf'
 import { NowRequest, NowResponse } from '@vercel/node'
 import { withAuth } from '../withAuth'
 
 
-export default withAuth((req: NowRequest, res: NowResponse) => {
-  console.log('BODY', req.body)
-
-  const telegraf = new Telegraf(process.env.BOT_TOKEN!)
-  telegraf.use(Telegraf.log())
-
-  telegraf.start((ctx) => ctx.reply('Welcome'))
-  telegraf.help((ctx) => ctx.reply('Send me a sticker'))
-  telegraf.on('sticker', (ctx) => ctx.reply('👍'))
-  telegraf.hears('hi', (ctx) => ctx.reply('Hey there'))
-  telegraf.launch({ webhook: { domain: 'https://checkersgamebot.vercel.app', hookPath: `/api/bot/${process.env.BOT_TOKEN!}` } })
-    .then(x => telegraf.handleUpdate(req.body, res))
-    .then(x => telegraf.stop())
-    .then(x => res.status(200))
+export default withAuth(async (req: NowRequest, res: NowResponse) => {
+  const { message } = req.body as Update
+  res.json({
+    method: 'sendMessage',
+    chat_id: message.chat.id,
+    text: `echo: ${message.text}`
+  })
 })
+
+export interface Update {
+  update_id: number
+  message: Message
+}
+
+export interface Message {
+  message_id: number
+  from: From
+  chat: Chat
+  date: number
+  text: string
+}
+
+export interface Chat {
+  id: number
+  first_name: string
+  last_name: string
+  username: string
+  type: string
+}
+
+export interface From {
+  id: number
+  is_bot: boolean
+  first_name: string
+  last_name: string
+  username: string
+  language_code: string
+}
