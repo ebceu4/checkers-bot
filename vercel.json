@@ -1,0 +1,13 @@
+{
+  "name": "checkers-bot",
+  "routes": [
+    {
+      "src": "/api/.*",
+      "dest": "/src/api"
+    },
+    {
+      "src": "/.*",
+      "status": 404
+    }
+  ]
+}

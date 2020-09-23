@@ -1,5 +1,5 @@
-import { withAuth } from '../withAuth'
-import { withTelegramHook } from '../withTelegram'
+import { withAuth } from '../../../generic/withAuth'
+import { withTelegramHook } from '@/generic/withTelegram'
 
 export default withAuth(withTelegramHook(async (telergam, update) => {
   console.log(update)
